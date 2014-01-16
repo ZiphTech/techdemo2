@@ -1,0 +1,43 @@
+material Armor_OgreMax
+{
+	technique Map#12
+	{
+		pass Map#13
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0.387 0.387 0.387 1 10
+
+			texture_unit Map#14
+			{
+				texture WaterGolemTexture_armor.jpg
+				filtering linear linear linear
+			}
+		}
+
+	}
+
+}
+
+
+
+material Water_OgreMax
+{
+	technique Map#9
+	{
+		pass Map#10
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit Map#11
+			{
+				texture WaterGolemTexture_water.jpg
+				filtering linear linear linear
+			}
+		}
+
+	}
+
+}
