@@ -20,9 +20,10 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() 
     {
-        Spatial liz = assetManager.loadModel("Models/lizard.j3o");
+        flyCam.setMoveSpeed(25f);
+        Spatial golem = assetManager.loadModel("Models/watergolem/watergolem.mesh.j3o");
         
-        liz.scale(0.5f);
+        golem.scale(0.5f);
         
         DirectionalLight dl = new DirectionalLight();
         dl.setDirection(new Vector3f(0, 0, -2f));
@@ -30,10 +31,10 @@ public class Main extends SimpleApplication {
         DirectionalLight dl2 = new DirectionalLight();
         dl.setDirection(new Vector3f(5f, 0, -2f));
         
-        liz.addLight(dl);
-        liz.addLight(dl2);
+        golem.addLight(dl);
+        golem.addLight(dl2);
         
-        rootNode.attachChild(liz);
+        rootNode.attachChild(golem);
     }
 
     @Override
