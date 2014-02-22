@@ -89,11 +89,11 @@ public class Main extends SimpleApplication
         
         board.setLocalTranslation(0, -35, 0);
 //        pawn.setLocalTranslation(-25, 0, -100);
-        queen.setLocalTranslation(-71f, QUEEN_HEIGHT, -50f - 100);
-        king.setLocalTranslation(-71f, KING_HEIGHT, -72.5f - 100);
+//        queen.setLocalTranslation(-71f, QUEEN_HEIGHT, -50f - 100);
+//        king.setLocalTranslation(-71f, KING_HEIGHT, -72.5f - 100);
 //        rook.setLocalTranslation(-31f, ROOK_HEIGHT, -50f - 100);
 //        knight.setLocalTranslation(9, KNIGHT_HEIGHT, -50f - 100);
-        bishop.setLocalTranslation(-11f, BISHOP_HEIGHT, -50f - 100);
+//        bishop.setLocalTranslation(-11f, BISHOP_HEIGHT, -50f - 100);
         
         
         DirectionalLight sun = new DirectionalLight();
@@ -102,15 +102,18 @@ public class Main extends SimpleApplication
         
         rootNode.addLight(sun);
         rootNode.attachChild(board);
-        rootNode.attachChild(bishop);
-        rootNode.attachChild(king);
+//        rootNode.attachChild(bishop);
+//        rootNode.attachChild(king);
 //        rootNode.attachChild(pawn);
-        rootNode.attachChild(queen);
+//        rootNode.attachChild(queen);
 //        rootNode.attachChild(knight);
 //        rootNode.attachChild(rook);
         createPawn(pawn);
         createRook(rook);
         createKnight(knight);
+        createBishop(bishop);
+        createQueen(queen);
+        createKing(king);
     }
     
     /**
@@ -160,8 +163,40 @@ public class Main extends SimpleApplication
         for (int i = 0; i < 2; i++)
         {
             knights.add(k.clone());
-            knights.get(i).setLocalTranslation(B_LEFT - (X_SPACE * i * 3 + B_LEFT), KNIGHT_HEIGHT, B_TOP);
+            knights.get(i).setLocalTranslation(B_LEFT + X_SPACE + (i * X_SPACE * 5), KNIGHT_HEIGHT, B_TOP);
             rootNode.attachChild(knights.get(i));
+        }
+    }
+    
+    LinkedList<Spatial> bishops = new LinkedList();
+    private void createBishop(Spatial b)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            bishops.add(b.clone());
+            bishops.get(i).setLocalTranslation(B_LEFT + X_SPACE * 2 + (i * X_SPACE * 3), BISHOP_HEIGHT, B_TOP);
+            rootNode.attachChild(bishops.get(i));
+        }
+    }
+    LinkedList<Spatial> queens = new LinkedList();
+    private void createQueen(Spatial q)
+    {
+        for (int i = 0; i < 1; i++)
+        {
+            queens.add(q.clone());
+            queens.get(i).setLocalTranslation(B_LEFT + X_SPACE * 3, QUEEN_HEIGHT, B_TOP);
+            rootNode.attachChild(queens.get(i));
+        }
+    }
+    
+    LinkedList<Spatial> kings = new LinkedList();
+    private void createKing(Spatial k)
+    {
+        for (int i = 0; i < 1; i++)
+        {
+            kings.add(k.clone());
+            kings.get(i).setLocalTranslation(B_LEFT + X_SPACE * 4, KING_HEIGHT, B_TOP);
+            rootNode.attachChild(kings.get(i));
         }
     }
     
@@ -182,7 +217,7 @@ public class Main extends SimpleApplication
         {
             if (name.equals("Click") && !isPressed)
             {
-                System.out.println("PAWN LOCATION: " + pawn.getLocalTranslation());
+//                System.out.println("PAWN LOCATION: " + pawn.getLocalTranslation());
             }
         }
     };
@@ -190,20 +225,6 @@ public class Main extends SimpleApplication
     @Override
     public void simpleUpdate(float tpf) {
         //TODO: add update code
-//        Vector3f v = new Vector3f(0, 0, 0);
-//        bishop.rotate(0, 0, v.z + 2 * tpf);
-//        king.rotate(0, 0, v.z + 2 * tpf);
-//        knight.rotate(0, 0, v.z + 2 * tpf);
-//        pawn.rotate(0, 0, v.z + 2 * tpf);
-//        queen.rotate(0, 0, v.z + 2 * tpf);
-//        rook.rotate(0, 0, v.z + 2 * tpf);
-        Vector3f v = new Vector3f();
-//        Vector3f p = pawn.getLocalTranslation();
-        Vector3f c = cam.getLocation();
-        
-        v.set(c.x - 50, c.y, c.z);
-        
-        pawn.setLocalTranslation(v);
     }
 
     @Override
