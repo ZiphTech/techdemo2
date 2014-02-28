@@ -72,7 +72,7 @@ public class Main extends SimpleApplication
         sun.setDirection(new Vector3f(-0.1f, -0.5f, -0.8f).normalizeLocal());
         sun.setColor(ColorRGBA.White);
         sun2.setDirection(new Vector3f(-0.1f, -0.5f, 0.8f).normalizeLocal());
-        sun2.setColor(ColorRGBA.White);
+        sun2.setColor(ColorRGBA.DarkGray);
         
         rootNode.addLight(sun);
         rootNode.addLight(sun2);
