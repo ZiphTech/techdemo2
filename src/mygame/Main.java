@@ -21,6 +21,7 @@ public class Main extends SimpleApplication
     
     PieceData pd;
     Selector cube;
+    ChessLogic cl;
     
 //    Geometry cube;
 
@@ -50,15 +51,14 @@ public class Main extends SimpleApplication
         /* 
          * TESTING ZONE
          */
-//        Box b = new Box(10.25f, 1, 10.25f);
-//        cube = new Geometry("Selector", b);
-//        cube.move(31, -25, 31);
-//        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-//        mat.setColor("Color", new ColorRGBA(0, 1, 0, 0.5f));
-//        mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-//        cube.setQueueBucket(Bucket.Translucent);
-//        cube.setMaterial(mat);
-//        rootNode.attachChild(cube);
+        cl = new ChessLogic();
+        cl.initBoard();
+        
+//        whitePlayer.pieceData();
+        whitePlayer.pieceCount();
+        
+        cl.setPiecePosition(whitePlayer.getPieces(), whitePlayer.getNum());
+        cl.drawBoard();
         /*
          * END TESTING ZONE
          */
@@ -104,9 +104,10 @@ public class Main extends SimpleApplication
         inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_RIGHT));
         inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_UP));
         inputManager.addMapping("Down", new KeyTrigger(KeyInput.KEY_DOWN));
+        inputManager.addMapping("Select", new KeyTrigger(KeyInput.KEY_SPACE));
 //        inputManager.addMapping("Pause", new KeyTrigger(KeyInput.KEY_P));
 //        
-        inputManager.addListener(actionListener, "Click", "Up", "Left", "Right", "Down");
+        inputManager.addListener(actionListener, "Click", "Up", "Left", "Right", "Down", "Select");
     }
     
     private ActionListener actionListener = new ActionListener()
@@ -120,54 +121,33 @@ public class Main extends SimpleApplication
             }
             if (name.equals("Up") && !isPressed)
             {
-                Vector3f v = cube.getCube().getLocalTranslation();
-                cube.getCube().setLocalTranslation(v.x, v.y, v.z - 20.5f);
-                cube.incX();
+                cube.getCube().setLocalTranslation(cube.move(Selector.Move.UP));
             }
             if (name.equals("Down") && !isPressed)
             {
-                Vector3f v = cube.getCube().getLocalTranslation();
-                cube.getCube().setLocalTranslation(v.x, v.y, v.z + 20.5f);
+                cube.getCube().setLocalTranslation(cube.move(Selector.Move.DOWN));
             }
             if (name.equals("Left") && !isPressed)
             {
-                Vector3f v = cube.getCube().getLocalTranslation();
-                cube.getCube().setLocalTranslation(v.x - 20.5f, v.y, v.z);
+                cube.getCube().setLocalTranslation(cube.move(Selector.Move.LEFT));
             }
             if (name.equals("Right") && !isPressed)
             {
-                Vector3f v = cube.getCube().getLocalTranslation();
-                cube.getCube().setLocalTranslation(v.x + 20.5f, v.y, v.z);
+                cube.getCube().setLocalTranslation(cube.move(Selector.Move.RIGHT));
+            }
+            if (name.equals("Select") && !isPressed)
+            {
+                cl.selectorPosition(cube.select());
             }
         }
     };
 
-//    float alpha = 0.5f;
-//    int delta = 1;
-//    float change = 0.25f;
 
     @Override
     public void simpleUpdate(float tpf) 
     {
-        cube.alphaFade(tpf);
         //TODO: add update code
-//        Vector3f v = cam.getLocation();
-
-//        cube.setLocalTranslation(v.x, v.y - 25, v.z);
-        
-        
-//        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-//        if (alpha < 0.40f || alpha > 1)
-//        {
-//            delta *= -1;
-//        }
-//        
-//        alpha += change * delta * tpf * 2;
-//        
-//        mat.setColor("Color", new ColorRGBA(0, 1, 0, alpha));
-//        mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-//        cube.getCube().setQueueBucket(Bucket.Translucent);
-//        cube.getCube().setMaterial(mat);
+        cube.alphaFade(tpf);
     }
 
     @Override

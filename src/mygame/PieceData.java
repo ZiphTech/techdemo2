@@ -10,7 +10,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import java.util.LinkedList;
 
-public class PieceData 
+public class PieceData implements BoardData
 {
     private Spatial bishop, king, knight, pawn, queen, rook;
     
@@ -38,14 +38,14 @@ public class PieceData
 
     // Y Value varies from piece to piece as each has a different height.
     
-    // Positional spots on the board.
-    private final float B_LEFT = -71;
-//    private final float B_RIGHT = 70.75f; // Might not need
-    private final float B_TOP = -72.5f;
-
-    // Space between squares on the board.
-    private final float X_SPACE = 20.25f; // 20
-    private final float Z_SPACE = 22.5f; //22.5
+//    // Positional spots on the board.
+//    private final float B_LEFT = -71;
+////    private final float B_RIGHT = 70.75f; // Might not need
+//    private final float B_TOP = -72.5f;
+//
+//    // Space between squares on the board.
+//    private final float X_SPACE = 20.25f; // 20
+//    private final float Z_SPACE = 22.5f; //22.5
     
     private final String P_ONE = "1";
     private final String P_TWO = "2";

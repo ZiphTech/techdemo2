@@ -4,6 +4,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -11,13 +12,20 @@ import com.jme3.scene.shape.Box;
 
 public class Selector 
 {
+    public enum Move
+    {
+        UP, DOWN, 
+        LEFT, RIGHT;
+    }
+    
+    
     AssetManager assetManager;
     Node rootNode;
     
     private Geometry cube;
     
-    private int bXPos = 0;
-    private int bYPos = 0;
+    private int xPos = 5;
+    private int yPos = 2;
     
     private float alpha = 0.5f;
     private int delta = 1;
@@ -59,74 +67,97 @@ public class Selector
         cube.setMaterial(mat);
     }
     
-    public void incX()
+    public int[] select()
     {
-        if(checkBoundries())
-        {
-            bXPos++;
-        }
-        else
-        {
-            bXPos--;
-        }
+        int[] position = new int[2];
+        
+        System.out.println("xPos: " + xPos);
+        System.out.println("yPos: " + yPos);
+        
+        position[0] = xPos;
+        position[1] = yPos;
+        
+        return position;
     }
     
-    public void decX()
+    public Vector3f move(Selector.Move movement)
     {
-        if (checkBoundries())
+        Vector3f v = new Vector3f();
+        Vector3f c = cube.getLocalTranslation();
+        
+        switch(movement)
         {
-            bXPos--;
+            case UP:
+                yPos++;
+                if (checkBoundries())
+                {
+                    v.set(c.x, c.y, c.z - 20.5f);
+                }
+                else
+                {
+                    v.set(c);
+                }
+                break;
+                
+            case DOWN:
+                yPos--;
+                if (checkBoundries())
+                {
+                    v.set(c.x, c.y, c.z + 20.5f);
+                }
+                else
+                {
+                    v.set(c);
+                }
+                break;
+                
+            case LEFT:
+                xPos--;
+                if (checkBoundries())
+                {
+                    v.set(c.x - 20.5f, c.y, c.z);
+                }
+                else
+                {
+                    v.set(c);
+                }
+                break;
+                
+            case RIGHT:
+                xPos++;
+                if (checkBoundries())
+                {
+                    v.set(c.x + 20.5f, c.y, c.z);
+                }
+                else
+                {
+                    v.set(c);
+                }
+                break;
         }
-        else
-        {
-            bXPos++;
-        }
-    }
-    
-    public void incY()
-    {
-        if (checkBoundries())
-        {
-            bYPos++;
-        }
-        else
-        {
-            bYPos--;
-        }
-    }
-    
-    public void decY()
-    {
-        if (checkBoundries())
-        {
-            bYPos--;
-        }
-        else
-        {
-            bYPos++;
-        }
+        return v;
     }
     
     private boolean checkBoundries()
     {
-        if (bXPos > 7)
+        if (xPos > 7)
         {
-//            bXPos = 7;
+            xPos = 7;
             return false;
         }
-        if (bXPos < 0)
+        if (xPos < 0)
         {
-//            bXPos = 0;
+            xPos = 0;
             return false;
         }
-        if (bYPos > 7)
+        if (yPos > 7)
         {
-//            bYPos = 7;
+            yPos = 7;
             return false;
         }
-        if (bYPos < 0)
+        if (yPos < 0)
         {
-//            bYPos = 0;
+            yPos = 0;
             return false;
         }
         return true;
