@@ -64,7 +64,7 @@ public class PieceData implements BoardData
     public void loadModels()
     {
         bishop = assetManager.loadModel("Models/bishop/bishop.mesh.j3o");
-        king = assetManager.loadModel("Models/king/king.mesh.j3o");
+        king = assetManager.loadModel("Models/nKing/king/king.mesh.j3o");
         knight = assetManager.loadModel("Models/knight/knight.mesh.j3o");
         pawn = assetManager.loadModel("Models/pawn/pawn.mesh.j3o");
         queen = assetManager.loadModel("Models/queen/queen.mesh.j3o");
