@@ -10,7 +10,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import java.util.LinkedList;
 
-public class PieceData implements BoardData
+public class PieceGraphicData implements BoardData
 {
     private Spatial bishop, king, knight, pawn, queen, rook;
     
@@ -47,15 +47,12 @@ public class PieceData implements BoardData
 //    private final float X_SPACE = 20.25f; // 20
 //    private final float Z_SPACE = 22.5f; //22.5
     
-    private final String P_ONE = "1";
-    private final String P_TWO = "2";
-    
     private Node rootNode;
     private AssetManager assetManager;
     
-    private String playerNum;
+    private int playerNum;
     
-    public PieceData(AssetManager am, Node r)
+    public PieceGraphicData(AssetManager am, Node r)
     {
         this.rootNode = r;
         this.assetManager = am;
@@ -70,6 +67,7 @@ public class PieceData implements BoardData
         queen = assetManager.loadModel("Models/queen/queen.mesh.j3o");
         rook = assetManager.loadModel("Models/rook/rook.mesh.j3o");       
         setNames();
+        cleanPieces();
     }
     
     private void setNames()
@@ -82,7 +80,7 @@ public class PieceData implements BoardData
         rook.setName("rook");
     }
     
-    public void cleanPieces()
+    private void cleanPieces()
     {
         cleanPiece(bishop);
         cleanPiece(king);
@@ -125,7 +123,7 @@ public class PieceData implements BoardData
         mat.setColor("Diffuse", pColor);
         mat.setBoolean("UseMaterialColors", true);
         
-        if (p.getName().equals("knight") && playerNum.equals(P_TWO))
+        if (p.getName().equals("knight") && playerNum == 2)
         {
             Quaternion rot = new Quaternion();
             rot.fromAngleAxis(FastMath.PI, new Vector3f(0, 0, 1));
@@ -150,7 +148,7 @@ public class PieceData implements BoardData
         
         if (p.getName().equals("pawn"))
         {
-            if (getPlayerNum().equals(P_ONE))
+            if (getPlayerNum() == 1)
             {
                 return loc.set(B_LEFT + (X_SPACE * count), PAWN_HEIGHT, B_TOP + Z_SPACE);
             }
@@ -161,7 +159,7 @@ public class PieceData implements BoardData
         }
         if (p.getName().equals("rook"))
         {
-            if (getPlayerNum().equals(P_ONE))
+            if (getPlayerNum() == 1)
             {
                 return loc.set(B_LEFT + (X_SPACE * count * 7), ROOK_HEIGHT, B_TOP);
             }
@@ -172,7 +170,7 @@ public class PieceData implements BoardData
         }
         if (p.getName().equals("knight"))
         {
-            if (getPlayerNum().equals(P_ONE))
+            if (getPlayerNum() == 1)
             {
                 return loc.set(B_LEFT + X_SPACE + (count * X_SPACE * 5), KNIGHT_HEIGHT, B_TOP);
             }
@@ -183,7 +181,7 @@ public class PieceData implements BoardData
         }
         if (p.getName().equals("bishop"))
         {
-            if (getPlayerNum().equals(P_ONE))
+            if (getPlayerNum() == 1)
             {
                 return loc.set(B_LEFT + X_SPACE * 2 + (count * X_SPACE * 3), BISHOP_HEIGHT, B_TOP);
             }
@@ -194,7 +192,7 @@ public class PieceData implements BoardData
         }
         if (p.getName().equals("queen"))
         {
-            if (getPlayerNum().equals(P_ONE))
+            if (getPlayerNum() == 1)
             {
                 return loc.set(B_LEFT + X_SPACE * 3, QUEEN_HEIGHT, B_TOP);
             }
@@ -205,7 +203,7 @@ public class PieceData implements BoardData
         }
         if (p.getName().equals("king"))
         {
-            if (getPlayerNum().equals(P_ONE))
+            if (getPlayerNum() == 1)
             {
                 return loc.set(B_LEFT + X_SPACE * 4, KING_HEIGHT, B_TOP);
             }
@@ -220,14 +218,14 @@ public class PieceData implements BoardData
     /**
      * @return the playerNum
      */
-    public String getPlayerNum() {
+    public int getPlayerNum() {
         return playerNum;
     }
 
     /**
      * @param playerNum the playerNum to set
      */
-    public void setPlayerNum(String playerNum) {
+    public void setPlayerNum(int playerNum) {
         this.playerNum = playerNum;
     }
 }

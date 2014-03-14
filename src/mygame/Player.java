@@ -6,29 +6,35 @@ import java.util.LinkedList;
 
 public class Player 
 {
-    private PieceData pieceData;
+    private PieceGraphicData pieceData;
+    private Board board;
     
     private String name;
-    private String num;
     private ColorRGBA color;
+    
+    public static int playerNum = 0;
     
     private LinkedList<Spatial> pieces = new LinkedList();
     
-    public Player(String n, ColorRGBA c, PieceData pd, String num)
+    public Player(PieceGraphicData pd, Board b)
     {
-        this.name = n;
-        this.color = c;
         this.pieceData = pd;
-        this.num = num;
-        
-        pd.setPlayerNum(num);
-        genPieces();
+        this.board = b;
+        playerNum++;
+        pd.setPlayerNum(playerNum);
     }
     
-    private void genPieces()
+    public Player(String n, ColorRGBA c, PieceGraphicData pd, Board b)
     {
-        pieceData.setPieces(getPieces(), color);
-        System.out.println(name + " has " + getPieces().size() + " pieces available.");
+        this(pd, b);
+        this.name = n;
+        this.color = c;
+    }
+    
+    public void genPieces()
+    {
+        pieceData.setPieces(getPieces(), getColor());
+        System.out.println(getName() + " has " + getPieces().size() + " pieces available.");
     }
     
     // Debug info
@@ -83,18 +89,40 @@ public class Player
         System.out.println("King Count: " + kingCount);
     }
 
-    /**
-     * @return the num
-     */
-    public String getNum() {
-        return num;
-    }
 
     /**
      * @return the pieces
      */
     public LinkedList<Spatial> getPieces() {
         return pieces;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the color
+     */
+    public ColorRGBA getColor() {
+        return color;
+    }
+
+    /**
+     * @param color the color to set
+     */
+    public void setColor(ColorRGBA color) {
+        this.color = color;
     }
 }
 //public boolean hasPieces()

@@ -19,9 +19,9 @@ public class Main extends SimpleApplication
 {
     Spatial board;
     
-    PieceData pd;
+    PieceGraphicData pd;
     Selector cube;
-    ChessLogic cl;
+    Board b;
     
 //    Geometry cube;
 
@@ -34,7 +34,7 @@ public class Main extends SimpleApplication
     @Override
     public void simpleInitApp() 
     {
-        pd = new PieceData(assetManager, rootNode);
+        pd = new PieceGraphicData(assetManager, rootNode);
         cube = new Selector(assetManager, rootNode);
         
         initCam();
@@ -43,22 +43,29 @@ public class Main extends SimpleApplication
         initLights();
         
         pd.loadModels();
-        pd.cleanPieces();
         
-        Player whitePlayer = new Player("Abe", ColorRGBA.White, pd, "1");
-        Player blackPlayer = new Player("Cujo", ColorRGBA.DarkGray, pd, "2");
+        Player whitePlayer = new Player(pd, b);
+        whitePlayer.setName("Drew");
+        whitePlayer.setColor(ColorRGBA.Blue);
+        whitePlayer.genPieces();
+        
+        Player blackPlayer = new Player(pd, b);
+        blackPlayer.setName("Cujo");
+        blackPlayer.setColor(ColorRGBA.Green);
+        blackPlayer.genPieces();
+        
         
         /* 
          * TESTING ZONE
          */
-        cl = new ChessLogic();
-        cl.initBoard();
+        b = new Board();
+        b.initBoard();
         
 //        whitePlayer.pieceData();
         whitePlayer.pieceCount();
         
-        cl.setPiecePosition(whitePlayer.getPieces(), whitePlayer.getNum());
-        cl.drawBoard();
+        b.setPlayerPieces(whitePlayer.getPieces());
+        b.drawBoard();
         /*
          * END TESTING ZONE
          */
@@ -67,7 +74,7 @@ public class Main extends SimpleApplication
     private void initCam()
     {
         flyCam.setMoveSpeed(25f);
-//        flyCam.setEnabled(false);
+        flyCam.setEnabled(false);
         
         cam.setLocation(new Vector3f(0, 159, 206));
         cam.lookAt(new Vector3f(0, -20, 10), new Vector3f(0, 0, 0));
@@ -137,7 +144,7 @@ public class Main extends SimpleApplication
             }
             if (name.equals("Select") && !isPressed)
             {
-                cl.selectorPosition(cube.select());
+                b.selectedPosition(cube.select());
             }
         }
     };
