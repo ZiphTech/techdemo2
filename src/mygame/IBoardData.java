@@ -1,6 +1,6 @@
 package mygame;
 
-public interface BoardData 
+public interface IBoardData 
 {
     // Positional spots on the board.
     final float B_LEFT = -71;
